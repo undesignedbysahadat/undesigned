@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://undesignedbysahadat.netlify.app/sitemap.xml
