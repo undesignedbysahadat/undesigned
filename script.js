@@ -93,7 +93,6 @@ block:"start"
 });
 
 
-
 /* =========================
 MOBILE NAVBAR TOGGLE
 ========================= */
@@ -101,38 +100,32 @@ MOBILE NAVBAR TOGGLE
 const menuBtn = document.getElementById("menuBtn");
 const navMenu = document.getElementById("navMenu");
 
+if(menuBtn && navMenu){
+
 menuBtn.addEventListener("click", () => {
 
 navMenu.classList.toggle("active");
+menuBtn.classList.toggle("open");
 
 });
+
+}
 
 
 /* auto close menu when link clicked */
 
+if(navMenu){
+
 document.querySelectorAll(".nav-links a").forEach(link => {
 
 link.addEventListener("click", () => {
+
 navMenu.classList.remove("active");
-});
 
-});
+if(menuBtn){
+menuBtn.classList.remove("open");
+}
 
-  
-
-/* =========================
-MOBILE MENU AUTO CLOSE
-========================= */
-
-const menuToggle = document.getElementById("menu-toggle");
-const navItems = document.querySelectorAll(".nav-links a");
-
-if(menuToggle){
-
-navItems.forEach(link => {
-
-link.addEventListener("click", () => {
-menuToggle.checked = false;
 });
 
 });
@@ -157,13 +150,33 @@ formWrapper.classList.toggle("open");
 
 
 /* =========================
+SCROLL PROGRESS BAR
+========================= */
+
+const progressBar = document.querySelector(".scroll-progress");
+
+if(progressBar){
+
+window.addEventListener("scroll", () => {
+
+const scrollTop = window.scrollY;
+const pageHeight = document.body.scrollHeight - window.innerHeight;
+
+const progress = (scrollTop / pageHeight) * 100;
+
+progressBar.style.width = progress + "%";
+
+});
+
+}
+
+
+/* =========================
 GOOGLE SHEET FORM SUBMIT
 ========================= */
 
 const form = document.getElementById("project-form");
 const successMsg = document.getElementById("formSuccess");
-
-/* paste your Apps Script URL here */
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLPPH3O8sGyVPsvrpWTyYghduROJwW-1sSOsMSE9U0XdHfxXSbzjVqmaDaZaAoEikuTA/exec";
 
@@ -174,7 +187,6 @@ form.addEventListener("submit", async function(e){
 e.preventDefault();
 
 const formData = new FormData(form);
-
 const data = Object.fromEntries(formData.entries());
 
 try{
@@ -189,8 +201,6 @@ successMsg.style.display="block";
 }
 
 form.reset();
-
-/* auto close form after 3s */
 
 setTimeout(()=>{
 
@@ -214,5 +224,4 @@ alert("Error sending form. Please try again.");
 
 }
 
-
-});   // ← missing closing bracket fixed
+});
