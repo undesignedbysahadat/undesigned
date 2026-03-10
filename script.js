@@ -93,6 +93,33 @@ block:"start"
 });
 
 
+
+/* =========================
+MOBILE NAVBAR TOGGLE
+========================= */
+
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
+
+menuBtn.addEventListener("click", () => {
+
+navMenu.classList.toggle("active");
+
+});
+
+
+/* auto close menu when link clicked */
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+link.addEventListener("click", () => {
+navMenu.classList.remove("active");
+});
+
+});
+
+  
+
 /* =========================
 MOBILE MENU AUTO CLOSE
 ========================= */
@@ -186,5 +213,6 @@ alert("Error sending form. Please try again.");
 });
 
 }
+
 
 });   // ← missing closing bracket fixed
