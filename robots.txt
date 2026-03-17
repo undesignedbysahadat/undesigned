@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://undesignedbysahadat.netlify.app/sitemap.xml
+Sitemap: https://undesignedbysahadat.github.io/undesigned/sitemap.xml
