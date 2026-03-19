@@ -5,10 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ─────────────────────────────────────
-  // EMAILJS INIT
-  // Replace with your key from https://emailjs.com
-  // ─────────────────────────────────────
+  // ─── EMAILJS INIT ───
   emailjs.init("-XJxZKIcbvResZydf");
 
   // ═══════════════════════════════════
@@ -33,10 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 400);
   });
 
-  // Prevent scroll while loading
   document.body.style.overflow = 'hidden';
-
-  // Fallback — hide loader after 3s no matter what
   setTimeout(() => {
     loader.classList.add('hidden');
     document.body.style.overflow = '';
@@ -48,12 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollBar = document.getElementById('scrollProgress');
 
   function updateScrollProgress() {
-    const scrollTop  = window.scrollY;
-    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-    const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     scrollBar.style.width = pct + '%';
   }
-
   window.addEventListener('scroll', updateScrollProgress, { passive: true });
 
   // ═══════════════════════════════════
@@ -70,33 +63,53 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ═══════════════════════════════════
-  // HAMBURGER MENU
+  // HAMBURGER + MOBILE MENU
   // ═══════════════════════════════════
   const hamburger  = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileLinks = document.querySelectorAll('.mobile-link');
 
+  // Create backdrop dynamically
+  const backdrop = document.createElement('div');
+  backdrop.className = 'mobile-menu-backdrop';
+  document.body.appendChild(backdrop);
+
+  // Add close button inside menu
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'mobile-menu-close';
+  closeBtn.innerHTML = '✕';
+  closeBtn.setAttribute('aria-label', 'Close menu');
+  mobileMenu.appendChild(closeBtn);
+
+  function openMenu() {
+    mobileMenu.classList.add('open');
+    backdrop.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    backdrop.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   hamburger.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
+
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
 
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeMenu);
   });
 
-  // Close on escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      mobileMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
+      closeMenu();
+      closeLightbox();
     }
   });
 
@@ -121,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { lightboxImg.src = ''; }, 300);
   }
 
-  // Attach lightbox to all asset cells that contain an image
   document.querySelectorAll('.lightbox-trigger img').forEach(img => {
     img.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -129,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Also attach to eletech and carousel images
   document.querySelectorAll('.eletech-profile-img, .carousel-full-img').forEach(img => {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => openLightbox(img.src, img.alt));
@@ -139,12 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
   lightboxBackdrop.addEventListener('click', closeLightbox);
 
   // ═══════════════════════════════════
-  // CUSTOM CURSOR
+  // CUSTOM CURSOR — desktop only
   // ═══════════════════════════════════
   const dot  = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
 
-  if (dot && ring) {
+  // Only run on devices with a fine pointer (mouse)
+  if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
     let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
     document.addEventListener('mousemove', e => {
@@ -174,6 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ring.style.borderColor = 'rgba(82,99,235,0.5)';
       });
     });
+  } else {
+    // Hide cursor elements on touch devices
+    if (dot)  dot.style.display  = 'none';
+    if (ring) ring.style.display = 'none';
   }
 
   // ═══════════════════════════════════
@@ -238,6 +254,56 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ═══════════════════════════════════
+  // COUNTER ANIMATION — analog meter style
+  // ═══════════════════════════════════
+  function animateCounter(el) {
+    const target  = parseInt(el.dataset.target, 10);
+    const suffix  = el.dataset.suffix || '';
+    const duration = 1800; // ms
+    const steps    = 60;
+    const stepTime  = duration / steps;
+    let current    = 0;
+
+    // Ease out cubic
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      current = Math.round(easeOut(progress) * target);
+
+      el.textContent = current + suffix;
+
+      // Pulse on each tick — analog meter feel
+      el.classList.add('counting');
+      setTimeout(() => el.classList.remove('counting'), 80);
+
+      if (step >= steps) {
+        clearInterval(timer);
+        el.textContent = target + suffix; // ensure exact final value
+      }
+    }, stepTime);
+  }
+
+  // Trigger counter when about section is visible
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.about-stat-number').forEach(el => {
+          animateCounter(el);
+        });
+        statsObserver.unobserve(entry.target); // run only once
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const aboutStats = document.querySelector('.about-stats');
+  if (aboutStats) statsObserver.observe(aboutStats);
+
+  // ═══════════════════════════════════
   // CONTACT FORM — hover + click toggle
   // ═══════════════════════════════════
   const formTrigger = document.getElementById('formTrigger');
@@ -273,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
       successMsg.style.display = 'none';
       errorMsg.style.display   = 'none';
 
-      // Replace YOUR_SERVICE_ID and YOUR_TEMPLATE_ID from EmailJS dashboard
       emailjs.sendForm('service_sgt1ygl', 'template_6b3vq08', this)
         .then(() => {
           successMsg.style.display = 'block';
