@@ -47,7 +47,8 @@
   <!-- PAGE LOADER -->
   <div class="page-loader" id="pageLoader">
     <div class="loader-logo">
-      <img src="my logo svg/UnDesigned Logo_icon lite tp.svg" alt="UnDesigned" />
+      <img src="my logo svg/UnDesigned Logo_icon lite tp.svg" alt="UnDesigned" class="logo-lite" />
+      <img src="my logo svg/UnDesigned Logo_icon dark tp.svg" alt="UnDesigned" class="logo-dark" />
       <div class="loader-bar">
         <div class="loader-fill" id="loaderFill"></div>
       </div>
@@ -57,11 +58,30 @@
   <!-- SCROLL PROGRESS BAR -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- BACK TO TOP -->
+  <!-- BACK TO TOP & THEME TOGGLE FAB STACK -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       <path d="M9 14V4M4 9l5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
         stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+    <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   </button>
 
@@ -93,7 +113,8 @@
   <nav class="navbar fullwidth" id="navbar">
     <div class="nav-inner" id="navInner">
       <a href="#home" class="nav-logo">
-        <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="nav-logo-wordmark" />
+        <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="nav-logo-wordmark logo-lite" />
+        <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="nav-logo-wordmark logo-dark" />
         <span class="nav-logo-sep">|</span>
         <span class="nav-logo-name">Sahadat Khan</span>
       </a>
@@ -119,8 +140,10 @@
         <span class="badge-dot"></span>
         Available for Freelance Projects
       </div>
-      <div class="hero-big-title"><img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned"
-          class="hero-wordmark" /></div>
+      <div class="hero-big-title">
+        <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="hero-wordmark logo-lite" />
+        <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="hero-wordmark logo-dark" />
+      </div>
       <h1 class="hero-title">
         I build brands that <span class="accent-word">speak</span><br>before you do.
       </h1>
@@ -403,52 +426,122 @@
       <div class="service-card reveal">
         <div class="service-header">
           <div class="service-icon">◈</div>
-          <div class="service-title">Brand Identity Design</div>
+          <div class="service-title">Logo & Brand Identity</div>
           <div class="service-arrow">↓</div>
         </div>
         <div class="service-body">
-          <p class="service-desc">Full brand systems built from strategy — logo, color, typography, tone, and usage
-            guidelines.</p>
+          <p class="service-desc">Clean, strategic brand design built to leave a lasting mark, from standalone logos to
+            full visual identity systems.</p>
           <ul class="service-list">
-            <li>Logo System (5+ versions)</li>
-            <li>Color & Typography</li>
-            <li>Brand Guidelines</li>
-            <li>Business Card / Stationery</li>
+            <li>Logos Only (Strategic Visual Marks)</li>
+            <li>Full Brand System & Strategy</li>
+            <li>Custom Color & Typography Systems</li>
+            <li>Complete Brand Guidelines</li>
           </ul>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="service-header">
           <div class="service-icon">◆</div>
-          <div class="service-title">Social & Content Design</div>
+          <div class="service-title">Social & Marketing Design</div>
           <div class="service-arrow">↓</div>
         </div>
         <div class="service-body">
-          <p class="service-desc">Scroll-stopping social media creatives, YouTube thumbnails, and content templates that
-            stay on-brand.</p>
+          <p class="service-desc">High-performance social media creatives, scroll-stopping YouTube thumbnails, and
+            content templates that drive engagement.</p>
           <ul class="service-list">
-            <li>Instagram / Facebook Posts</li>
-            <li>YouTube Thumbnails</li>
-            <li>Stories & Reels Covers</li>
-            <li>Content Template Sets</li>
+            <li>High-CTR YouTube Thumbnails</li>
+            <li>Instagram / LinkedIn creatives</li>
+            <li>Reels & Stories Cover Assets</li>
+            <li>Canva & Illustrator Template Sets</li>
           </ul>
         </div>
       </div>
-      <div class="service-card reveal">
-        <div class="service-header">
-          <div class="service-icon">◉</div>
-          <div class="service-title">Print Design</div>
-          <div class="service-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq-section">
+    <div class="faq-inner reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Frequently asked<br>questions.</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is your design process?</span>
+            <span class="faq-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 4.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>My process starts with research and strategy. We define your brand goals, target audience, and visual
+              style first. Then, I design concepts, refine them based on your feedback, and deliver the final assets
+              ready for print and digital use.</p>
+          </div>
         </div>
-        <div class="service-body">
-          <p class="service-desc">Menus, posters, brochures, and other print assets aligned with your brand identity —
-            ready for print.</p>
-          <ul class="service-list">
-            <li>Menu Design</li>
-            <li>Poster & Flyer</li>
-            <li>Brochure / Booklet</li>
-            <li>Print-ready Files</li>
-          </ul>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What deliverables are included in a full branding project?</span>
+            <span class="faq-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 4.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>A full brand identity includes a comprehensive logo system (primary, wordmark, submark, and favicon in
+              all print/web formats like AI, SVG, PNG, and PDF), a custom color palette, typography guidelines, brand
+              elements/patterns, and a Brand Guideline PDF.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How long does a typical project take?</span>
+            <span class="faq-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 4.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>Brand identity systems usually take 2 to 3 weeks from strategy to delivery. For social creatives or
+              thumbnails, turnaround is typically 24-48 hours depending on requirements and availability.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do you design templates that I can edit myself?</span>
+            <span class="faq-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 4.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! I design editable, premium Canva or Illustrator templates for social media posts, stories, and
+              presentations so you can easily maintain brand consistency on the fly.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do we get started?</span>
+            <span class="faq-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 4.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>Simply scroll down to the Contact section, choose your service type, and share your project details. You
+              can also book a call or message me directly on WhatsApp to chat instantly!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -465,20 +558,45 @@
       <a href="mailto:undesignedbysahadat@gmail.com" class="contact-email">undesignedbysahadat@gmail.com</a>
 
       <div class="contact-socials">
-        <!-- WhatsApp — replace src with your actual icon path -->
+        <!-- WhatsApp -->
         <a href="https://wa.me/918305269282?text=Hi%20Sahadat!%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20working%20with%20you.%20Could%20we%20discuss%20my%20project%3F"
-          target="_blank" class="social-btn">
-          <img src="otheri imgs/whatsapp icon.svg" alt="WhatsApp" class="social-btn-icon" />
+          target="_blank" class="social-btn" aria-label="Chat on WhatsApp">
+          <svg class="social-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.477 2 12c0 1.89.524 3.655 1.435 5.163L2 22l4.977-1.406A9.952 9.952 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm-1.314 13.499c-1.06-.603-2.01-1.394-2.768-2.329-.659-.823-1.14-1.772-1.304-2.77-.143-.878.073-1.762.65-2.398.22-.244.481-.368.752-.368h.426c.195 0 .37.115.447.296l.867 2.02a.494.494 0 01-.076.522l-.52.626a.16.16 0 00-.013.185c.292.502.657.96 1.082 1.356.426.396.913.725 1.445.975a.16.16 0 00.184-.03l.568-.57a.493.493 0 01.509-.117l2.097.755c.185.067.31.242.31.44v.426c0 .272-.125.532-.368.752-.637.577-1.52.793-2.399.65a7.03 7.03 0 01-.89-.221z" />
+          </svg>
           WhatsApp
         </a>
-        <!-- Instagram — replace src with your actual icon path -->
-        <a href="https://www.instagram.com/undesignedbysahadat/" target="_blank" class="social-btn">
-          <img src="otheri imgs/instagram logo.png" alt="Instagram" class="social-btn-icon" />
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/undesignedbysahadat/" target="_blank" class="social-btn"
+          aria-label="Visit Instagram">
+          <svg class="social-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
           Instagram
         </a>
-        <!-- Email form — replace src with your actual icon path -->
-        <button class="social-btn form-trigger" id="formTrigger">
-          <img src="otheri imgs/gmail icon.svg" alt="Email" class="social-btn-icon" />
+        <!-- Book a Call -->
+        <a href="YOUR_CALENDLY_LINK" target="_blank" class="social-btn" id="calendlyBtn" aria-label="Book a Call">
+          <svg class="social-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Book a Call
+        </a>
+        <!-- Email form trigger -->
+        <button class="social-btn form-trigger" id="formTrigger" aria-label="Open Project Form">
+          <svg class="social-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
           Send Project Details
         </button>
       </div>
@@ -527,7 +645,8 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="footer-wordmark" />
+      <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="footer-wordmark logo-lite" />
+      <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="footer-wordmark logo-dark" />
     </div>
     <div class="footer-copy">© 2026 UnDesigned — Sahadat Khan</div>
     <div class="footer-links">
