@@ -43,13 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('mouseenter', () => {
         cursorRing.style.width = '52px';
         cursorRing.style.height = '52px';
-        cursorRing.style.borderColor = 'rgba(82, 99, 235, 0.8)';
+        cursorRing.style.borderColor = 'var(--cursor-ring-hover)';
         cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
       });
       el.addEventListener('mouseleave', () => {
         cursorRing.style.width = '32px';
         cursorRing.style.height = '32px';
-        cursorRing.style.borderColor = 'rgba(82, 99, 235, 0.5)';
+        cursorRing.style.borderColor = 'var(--cursor-ring)';
         cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
       });
     });
@@ -58,25 +58,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // ════════════════════════════════════
   // 1. THEME TOGGLE
   // ════════════════════════════════════
-  const themeToggle = document.getElementById('themeToggle');
   const html = document.documentElement;
 
   function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
     document.body.setAttribute('data-theme', theme);
     localStorage.setItem('ud-theme', theme);
+    document.querySelectorAll('.theme-toggle').forEach(toggle => {
+      toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+    });
   }
 
   // Init: check saved, else default dark
   const savedTheme = localStorage.getItem('ud-theme') || 'dark';
   applyTheme(savedTheme);
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
+  document.querySelectorAll('.theme-toggle').forEach(toggle => {
+    const toggleTheme = (event) => {
+      event.preventDefault();
       const current = html.getAttribute('data-theme');
       applyTheme(current === 'dark' ? 'light' : 'dark');
+    };
+
+    if (window.PointerEvent) {
+      toggle.addEventListener('pointerup', toggleTheme);
+    } else {
+      toggle.addEventListener('click', toggleTheme);
+    }
+
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') toggleTheme(event);
     });
-  }
+  });
 
   // ════════════════════════════════════
   // 2. PAGE LOADER

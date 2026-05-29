@@ -29,6 +29,9 @@
   --nav-island-bg: rgba(11, 17, 32, 0.5);
   --nav-island-border: rgba(255, 255, 255, 0.1);
   --mobile-menu-bg: rgba(11, 17, 32, 0.98);
+  --cursor-dot: #7B8CFF;
+  --cursor-ring: rgba(123, 140, 255, 0.6);
+  --cursor-ring-hover: rgba(123, 140, 255, 0.9);
   --glow-1: radial-gradient(circle, rgba(82, 99, 235, 0.14) 0%, transparent 60%);
   --glow-2: radial-gradient(circle, rgba(123, 140, 255, 0.08) 0%, transparent 60%);
   --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -56,6 +59,9 @@
   --nav-island-bg: rgba(255, 255, 255, 0.8);
   --nav-island-border: rgba(82, 99, 235, 0.15);
   --mobile-menu-bg: rgba(248, 250, 252, 0.98);
+  --cursor-dot: #0B1120;
+  --cursor-ring: rgba(11, 17, 32, 0.45);
+  --cursor-ring-hover: rgba(59, 77, 242, 0.85);
   --glow-1: radial-gradient(circle, rgba(82, 99, 235, 0.08) 0%, transparent 60%);
   --glow-2: radial-gradient(circle, rgba(82, 99, 235, 0.04) 0%, transparent 60%);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -253,7 +259,7 @@ body::after {
   position: fixed;
   bottom: 32px;
   right: 32px;
-  z-index: 200;
+  z-index: 950;
   width: 44px;
   height: 44px;
   background: var(--dark2);
@@ -264,6 +270,9 @@ body::after {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
@@ -548,12 +557,12 @@ body::after {
   .cursor-dot {
     width: 8px;
     height: 8px;
-    background: var(--accent);
+    background: var(--cursor-dot);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: screen;
+    mix-blend-mode: normal;
     transform: translate(-50%, -50%);
     transition: transform 0.15s ease;
   }
@@ -561,7 +570,7 @@ body::after {
   .cursor-ring {
     width: 32px;
     height: 32px;
-    border: 1px solid rgba(82, 99, 235, 0.5);
+    border: 1px solid var(--cursor-ring);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
@@ -2195,8 +2204,8 @@ footer {
   }
 
   .theme-toggle {
-    bottom: 20px;
-    right: 20px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    right: max(20px, env(safe-area-inset-right));
     width: 40px;
     height: 40px;
   }
