@@ -11,51 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ════════════════════════════════════
-  // 0. CUSTOM CURSOR
-  // ════════════════════════════════════
-  const cursorDot = document.getElementById('cursorDot');
-  const cursorRing = document.getElementById('cursorRing');
-
-  if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
-
-    // Smooth ring follow
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      cursorRing.style.left = ringX + 'px';
-      cursorRing.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Hover expand on interactive elements
-    const hoverTargets = document.querySelectorAll('a, button, [role="button"], .faq-item, .service-card, .asset-cell');
-    hoverTargets.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorRing.style.width = '52px';
-        cursorRing.style.height = '52px';
-        cursorRing.style.borderColor = 'var(--cursor-ring-hover)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorRing.style.width = '32px';
-        cursorRing.style.height = '32px';
-        cursorRing.style.borderColor = 'var(--cursor-ring)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-      });
-    });
-  }
-
-  // ════════════════════════════════════
   // 1. THEME TOGGLE
   // ════════════════════════════════════
   const html = document.documentElement;
@@ -118,6 +73,35 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('load', hideLoader);
   // Fallback
   setTimeout(() => { if (loader && !loader.classList.contains('hidden')) hideLoader(); }, 3000);
+
+  // Image skeletons + fade-in
+  document.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    const isRaster = /\.(webp|png|jpe?g|gif|avif)$/i.test(src);
+    const isUiImage = img.closest('.page-loader, .nav-logo, .hero-big-title, .footer-logo, .social-btn, .lightbox');
+
+    if (!isRaster || isUiImage) return;
+
+    const shell = img.parentElement;
+    img.classList.add('image-fade');
+
+    if (shell) shell.classList.add('image-loading');
+
+    const markLoaded = () => {
+      img.classList.add('is-loaded');
+      if (shell) {
+        shell.classList.add('image-loaded');
+        setTimeout(() => shell.classList.remove('image-loading'), 400);
+      }
+    };
+
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded();
+    } else {
+      img.addEventListener('load', markLoaded, { once: true });
+      img.addEventListener('error', markLoaded, { once: true });
+    }
+  });
 
   // ════════════════════════════════════
   // 3. SCROLL PROGRESS BAR
@@ -236,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.lightbox-trigger img, .eletech-profile-img').forEach(img => {
-    img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => openLightbox(img.src, img.alt));
   });
 

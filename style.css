@@ -29,9 +29,7 @@
   --nav-island-bg: rgba(11, 17, 32, 0.5);
   --nav-island-border: rgba(255, 255, 255, 0.1);
   --mobile-menu-bg: rgba(11, 17, 32, 0.98);
-  --cursor-dot: #7B8CFF;
-  --cursor-ring: rgba(123, 140, 255, 0.6);
-  --cursor-ring-hover: rgba(123, 140, 255, 0.9);
+
   --glow-1: radial-gradient(circle, rgba(82, 99, 235, 0.14) 0%, transparent 60%);
   --glow-2: radial-gradient(circle, rgba(123, 140, 255, 0.08) 0%, transparent 60%);
   --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -59,9 +57,7 @@
   --nav-island-bg: rgba(255, 255, 255, 0.8);
   --nav-island-border: rgba(82, 99, 235, 0.15);
   --mobile-menu-bg: rgba(248, 250, 252, 0.98);
-  --cursor-dot: #0B1120;
-  --cursor-ring: rgba(11, 17, 32, 0.45);
-  --cursor-ring-hover: rgba(59, 77, 242, 0.85);
+
   --glow-1: radial-gradient(circle, rgba(82, 99, 235, 0.08) 0%, transparent 60%);
   --glow-2: radial-gradient(circle, rgba(82, 99, 235, 0.04) 0%, transparent 60%);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -378,15 +374,59 @@ body::after {
   transform: rotate(90deg);
 }
 
-.lightbox-trigger {
-  cursor: zoom-in;
+.asset-cell,
+.about-image-box,
+.carousel-full-wrap,
+.eletech-profile-wrap {
+  position: relative;
+  overflow: hidden;
 }
 
-@media (pointer: fine) {
-  .lightbox-trigger {
-    cursor: none;
+.image-loading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.16) 50%, transparent 70%),
+    rgba(82, 99, 235, 0.08);
+  background-size: 220% 100%;
+  animation: imageShimmer 1.25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+[data-theme="light"] .image-loading::before {
+  background:
+    linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.8) 50%, transparent 70%),
+    rgba(82, 99, 235, 0.1);
+}
+
+.image-loaded::before {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.image-fade {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.image-fade.is-loaded {
+  opacity: 1;
+}
+
+@keyframes imageShimmer {
+  from {
+    background-position: 140% 0;
+  }
+
+  to {
+    background-position: -80% 0;
   }
 }
+
+
 
 /* ───────────────────────────────────────
    MOBILE MENU — slide in from right
@@ -537,48 +577,7 @@ body::after {
   color: var(--surface);
 }
 
-/* ───────────────────────────────────────
-   CURSOR — desktop only (handled in JS)
-─────────────────────────────────────── */
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
 
-  a,
-  button,
-  [role="button"],
-  .faq-item,
-  .service-card,
-  .asset-cell {
-    cursor: none;
-  }
-
-  .cursor-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--cursor-dot);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: normal;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease;
-  }
-
-  .cursor-ring {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--cursor-ring);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
-  }
-}
 
 /* ───────────────────────────────────────
    NAVBAR
@@ -1520,7 +1519,6 @@ section {
   height: auto;
   display: block;
   object-fit: contain;
-  cursor: zoom-in;
 }
 
 /* Placeholders */
