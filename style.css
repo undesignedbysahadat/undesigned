@@ -602,7 +602,7 @@ body::after {
 
 .navbar.fullwidth .nav-inner {
   width: 100%;
-  max-width: 1440px;
+  max-width: 100%;
   border-radius: 0;
   padding: 16px 80px;
   background: var(--nav-bg);
@@ -1885,6 +1885,16 @@ section {
 
 .social-btn:hover .social-btn-icon {
   transform: scale(1.1);
+}
+
+/* WhatsApp icon — SVG is black, invert for dark mode */
+.whatsapp-icon {
+  filter: invert(1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="light"] .whatsapp-icon {
+  filter: invert(0);
 }
 
 /* Contact form */
