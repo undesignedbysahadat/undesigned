@@ -37,6 +37,8 @@
   --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.02);
   --noise-opacity: 0.4;
   --input-bg: rgba(255, 255, 255, 0.04);
+  --glass-blur: 12px;
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="light"] {
@@ -65,6 +67,7 @@
   --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
   --noise-opacity: 0.15;
   --input-bg: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(82, 99, 235, 0.12);
 }
 
 html {
@@ -82,6 +85,18 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 body {
@@ -304,6 +319,49 @@ body::after {
 
 [data-theme="light"] .theme-toggle .moon-icon {
   display: block;
+}
+
+/* Circular theme reveal — the new theme expands from the toggle position. */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-radial-reveal 480ms ease-in-out both;
+}
+
+@keyframes theme-radial-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-reveal-x) var(--theme-reveal-y));
+  }
+
+  to {
+    clip-path: circle(var(--theme-reveal-radius) at var(--theme-reveal-x) var(--theme-reveal-y));
+  }
+}
+
+/* Lightweight fallback for browsers and devices that skip the radial reveal. */
+body.theme-fade {
+  opacity: 0.78;
+}
+
+body.theme-fade,
+body:not(.theme-fade) {
+  transition: opacity 140ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  body.theme-fade,
+  body:not(.theme-fade) {
+    transition: none;
+  }
 }
 
 /* ───────────────────────────────────────
@@ -1822,22 +1880,103 @@ section {
   margin: 0 auto;
 }
 
+.contact-primary-cta {
+  margin-top: 32px;
+  padding: 16px 34px;
+  font-size: 16px;
+}
+
+.contact-primary-cta svg {
+  transition: transform 0.22s ease;
+}
+
+.contact-primary-cta:hover svg {
+  transform: translateX(3px);
+}
+
 .contact-email {
-  font-family: 'Sora', sans-serif;
-  font-size: clamp(13px, 1.8vw, 20px);
-  font-weight: 600;
+  appearance: none;
+  width: fit-content;
+  max-width: 100%;
+  margin: 24px auto 0;
+  padding: 8px 6px 6px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
   color: var(--surface);
-  text-decoration: none;
-  display: inline-block;
-  margin: 28px 0 36px;
-  padding-bottom: 4px;
-  border-bottom: 2px solid var(--accent);
-  transition: color 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Sora', sans-serif;
+  text-align: center;
+  transition: color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+
+.contact-email:hover,
+.contact-email:focus-visible {
+  color: var(--accent-light);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.contact-email-label,
+.contact-email-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-email-address {
+  font-size: clamp(13px, 1.8vw, 18px);
+  font-weight: 600;
   word-break: break-all;
 }
 
-.contact-email:hover {
+.contact-email-hint {
+  margin-top: 2px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contact-email:hover .contact-email-hint,
+.contact-email:focus-visible .contact-email-hint,
+.contact-email.is-copied .contact-email-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-email.is-copied .contact-email-hint {
   color: var(--accent-light);
+}
+
+.contact-secondary {
+  margin-top: 28px;
+  padding: 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.contact-secondary-label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .contact-socials {
@@ -1852,22 +1991,22 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--card-bg);
+  background: transparent;
   border: 1px solid var(--border);
   color: var(--text-dim);
-  padding: 11px 18px;
+  padding: 9px 16px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
 }
 
 .social-btn:hover {
-  background: rgba(82, 99, 235, 0.12);
-  border-color: rgba(82, 99, 235, 0.4);
+  background: rgba(82, 99, 235, 0.08);
+  border-color: rgba(82, 99, 235, 0.3);
   color: var(--surface);
   transform: translateY(-2px);
 }
@@ -2336,7 +2475,21 @@ footer {
   }
 
   .contact-email {
-    font-size: 13px;
+    width: 100%;
+  }
+
+  .contact-email-hint {
+    opacity: 0.72;
+    transform: none;
+  }
+
+  .contact-primary-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-secondary {
+    padding: 14px;
   }
 
   .contact-socials {
@@ -2344,7 +2497,9 @@ footer {
   }
 
   .social-btn {
-    padding: 9px 13px;
+    flex: 1 1 130px;
+    justify-content: center;
+    padding: 9px 12px;
     font-size: 13px;
   }
 
@@ -2380,4 +2535,121 @@ footer {
   .logos-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Responsive glass blur adjustment */
+@media (max-width: 768px) {
+  :root {
+    --glass-blur: 8px;
+  }
+}
+
+/* Light theme glass background opacity adjustments */
+[data-theme="light"].glass-enabled,
+[data-theme="light"] .glass-enabled {
+  --nav-bg: rgba(248, 250, 252, 0.45);
+  --nav-island-bg: rgba(255, 255, 255, 0.45);
+  --card-bg: rgba(255, 255, 255, 0.45);
+  --service-card-bg: rgba(255, 255, 255, 0.5);
+  --contact-form-bg: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM ENHANCEMENT (Single Toggle System)
+   Active when <body class="glass-enabled"> is present.
+   ========================================================================== */
+
+/* 1. Navbar */
+.glass-enabled .navbar.fullwidth .nav-inner {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: none;
+}
+
+.glass-enabled .navbar.island .nav-inner {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 2. Cards */
+.glass-enabled .project-section {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* Soften hover state shadows (avoid heavy blue glow shadows) */
+.glass-enabled .project-section:hover {
+  border-color: rgba(82, 99, 235, 0.25);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-enabled .service-card {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-enabled .service-card:hover,
+.glass-enabled .service-card.expanded {
+  border-color: rgba(82, 99, 235, 0.25);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-enabled .faq-item {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-enabled .faq-item:hover,
+.glass-enabled .faq-item.open {
+  border-color: rgba(82, 99, 235, 0.25);
+  box-shadow: var(--shadow-md);
+}
+
+/* 3. Selected Section Containers */
+.glass-enabled .contact-form {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-enabled .about-stats {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* About image badge - made glassmorphic on top of the about image */
+.glass-enabled .about-image-badge {
+  background: var(--nav-bg); /* Use matching translucent color */
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 4. Controls & Menus (for completeness) */
+.glass-enabled .back-to-top,
+.glass-enabled .theme-toggle {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-enabled .mobile-menu {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-left: 1px solid var(--glass-border);
 }

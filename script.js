@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('ud-theme', theme);
     document.querySelectorAll('.theme-toggle').forEach(toggle => {
       toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      toggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} theme`);
     });
   }
 
@@ -28,22 +29,75 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('ud-theme') || 'dark';
   applyTheme(savedTheme);
 
-  document.querySelectorAll('.theme-toggle').forEach(toggle => {
-    const toggleTheme = (event) => {
-      event.preventDefault();
-      const current = html.getAttribute('data-theme');
-      applyTheme(current === 'dark' ? 'light' : 'dark');
-    };
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const lowCoreCount = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+  const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
+  const lowPerformanceDevice =
+    navigator.connection?.saveData ||
+    (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+    (lowCoreCount && lowMemory);
+  let themeTransitionRunning = false;
 
-    if (window.PointerEvent) {
-      toggle.addEventListener('pointerup', toggleTheme);
-    } else {
-      toggle.addEventListener('click', toggleTheme);
+  function getRevealGeometry(toggle) {
+    const rect = toggle.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.max(
+      Math.hypot(x, y),
+      Math.hypot(window.innerWidth - x, y),
+      Math.hypot(x, window.innerHeight - y),
+      Math.hypot(window.innerWidth - x, window.innerHeight - y)
+    );
+
+    html.style.setProperty('--theme-reveal-x', `${x}px`);
+    html.style.setProperty('--theme-reveal-y', `${y}px`);
+    html.style.setProperty('--theme-reveal-radius', `${Math.ceil(radius)}px`);
+  }
+
+  async function fadeToTheme(theme) {
+    document.body.classList.add('theme-fade');
+    await new Promise(resolve => setTimeout(resolve, 140));
+    applyTheme(theme);
+    requestAnimationFrame(() => document.body.classList.remove('theme-fade'));
+    await new Promise(resolve => setTimeout(resolve, 180));
+  }
+
+  async function transitionToTheme(theme, toggle) {
+    if (reduceMotion.matches) {
+      applyTheme(theme);
+      return;
     }
 
-    toggle.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') toggleTheme(event);
-    });
+    if (!document.startViewTransition || lowPerformanceDevice) {
+      await fadeToTheme(theme);
+      return;
+    }
+
+    getRevealGeometry(toggle);
+    const transition = document.startViewTransition(() => applyTheme(theme));
+    await transition.finished;
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(toggle => {
+    const toggleTheme = async (event) => {
+      event.preventDefault();
+      if (themeTransitionRunning) return;
+
+      const current = html.getAttribute('data-theme');
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      themeTransitionRunning = true;
+      toggle.disabled = true;
+
+      try {
+        await transitionToTheme(nextTheme, toggle);
+      } finally {
+        themeTransitionRunning = false;
+        toggle.disabled = false;
+        toggle.focus({ preventScroll: true });
+      }
+    };
+
+    toggle.addEventListener('click', toggleTheme);
   });
 
   // ════════════════════════════════════
@@ -336,11 +390,40 @@ document.addEventListener('DOMContentLoaded', () => {
     formTrigger.addEventListener('click', () => {
       formOpen = !formOpen;
       formWrap.classList.toggle('open', formOpen);
+      formTrigger.setAttribute('aria-expanded', String(formOpen));
+      formTrigger.setAttribute('aria-label', formOpen ? 'Close Project Form' : 'Open Project Form');
+      const triggerLabel = formTrigger.querySelector('.contact-primary-label');
+      if (triggerLabel) triggerLabel.textContent = formOpen ? 'Close Project Form' : 'Send Project Details';
       if (formOpen) {
         setTimeout(() => formWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
       }
     });
   }
+
+  const copyEmail = document.getElementById('copyEmail');
+  const emailCopyStatus = document.getElementById('emailCopyStatus');
+  let copyFeedbackTimer;
+
+  copyEmail?.addEventListener('click', async () => {
+    const email = copyEmail.dataset.email;
+    if (!email) return;
+
+    try {
+      await navigator.clipboard.writeText(email);
+      const hint = copyEmail.querySelector('.contact-email-hint');
+      if (hint) hint.textContent = 'Copied to clipboard';
+      if (emailCopyStatus) emailCopyStatus.textContent = `${email} copied to clipboard`;
+      copyEmail.classList.add('is-copied');
+
+      clearTimeout(copyFeedbackTimer);
+      copyFeedbackTimer = setTimeout(() => {
+        if (hint) hint.textContent = 'Click to copy';
+        copyEmail.classList.remove('is-copied');
+      }, 1800);
+    } catch {
+      window.location.href = `mailto:${email}`;
+    }
+  });
 
   // ════════════════════════════════════
   // 14. EMAILJS FORM SUBMIT
