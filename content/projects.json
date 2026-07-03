@@ -1,0 +1,42 @@
+[
+  {
+    "id": "brewbite",
+    "name": "BrewBite Café",
+    "category": "Brand Identity",
+    "description": "Complete brand identity system, custom typography, packaging, and marketing collateral for an artisanal café.",
+    "cover": "content/projects/brewbite/BrewBite Brand Assets.webp",
+    "featured": true,
+    "isPrimary": true,
+    "url": "content/projects/brewbite/project.json"
+  },
+  {
+    "id": "glowera",
+    "name": "Glowera",
+    "category": "Brand Identity",
+    "description": "Premium skincare brand concept focusing on clean typographic identity and minimalist bottle packaging design.",
+    "cover": "content/projects/glowera/cover.webp",
+    "featured": true,
+    "isPrimary": false,
+    "url": "content/projects/glowera/project.json"
+  },
+  {
+    "id": "sheetomatic",
+    "name": "Sheetomatic",
+    "category": "Marketing Design",
+    "description": "Engaging social media creatives, high-CTR YouTube thumbnails, and carousel templates driving audience retention.",
+    "cover": "content/projects/sheetomatic/automate data entry thumbnail.webp",
+    "featured": true,
+    "isPrimary": false,
+    "url": "content/projects/sheetomatic/project.json"
+  },
+  {
+    "id": "eletech",
+    "name": "Eletech Solutions",
+    "category": "Brand Profile",
+    "description": "Professional corporate capability deck and profile design for a modern technology firm.",
+    "cover": "content/projects/eletech/profile horizontal.webp",
+    "featured": false,
+    "isPrimary": false,
+    "url": "content/projects/eletech/project.json"
+  }
+]
