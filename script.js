@@ -29,6 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('ud-theme') || 'dark';
   applyTheme(savedTheme);
 
+  const escapeHtml = value => String(value || '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+
+  const pageName = /projects\.html$/i.test(window.location.pathname) ? 'projects' : 'home';
+
+  function normalizePath(pathname) {
+    return pathname.replace(/\/index\.html$/i, '/');
+  }
+
+  function isSamePageUrl(url) {
+    return url.origin === window.location.origin && normalizePath(url.pathname) === normalizePath(window.location.pathname);
+  }
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const lowCoreCount = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
   const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
@@ -107,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loaderFill = document.getElementById('loaderFill');
 
   let progress = 0;
-  document.body.style.overflow = 'hidden';
+  if (loader) document.body.style.overflow = 'hidden';
 
   const fillInterval = setInterval(() => {
     progress += Math.random() * 20;
@@ -187,7 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. NAVBAR — fullwidth ↔ island
   // ════════════════════════════════════
   const navbar = document.getElementById('navbar');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinks = document.querySelectorAll('.nav-links a, .mobile-link');
+
+  function setActiveNav() {
+    navLinks.forEach(link => {
+      let linkUrl;
+      try {
+        linkUrl = new URL(link.getAttribute('href'), window.location.href);
+      } catch {
+        return;
+      }
+
+      const linkPage = link.dataset.navPage || (/projects\.html$/i.test(linkUrl.pathname) ? 'projects' : 'home');
+      const isActive = pageName === 'projects' && linkPage === 'projects';
+
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
 
   function updateNavbar() {
     if (!navbar) return;
@@ -195,15 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navbar.classList.toggle('island', isScrolled);
     navbar.classList.toggle('fullwidth', !isScrolled);
 
-    // Active link
-    const sections = document.querySelectorAll('section[id]');
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 200) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
+    setActiveNav();
   }
 
   updateNavbar();
@@ -239,13 +270,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // ════════════════════════════════════
   // 7. SMOOTH SCROLL
   // ════════════════════════════════════
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
+  document.querySelectorAll('a[href*="#"]').forEach(a => {
     a.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
+      const url = new URL(this.getAttribute('href'), window.location.href);
+      if (!isSamePageUrl(url)) return;
+
+      const target = document.querySelector(url.hash);
       if (target) {
         e.preventDefault();
         const navH = navbar ? navbar.offsetHeight : 0;
         const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+        if (window.location.hash !== url.hash) history.pushState(null, '', url.hash);
         window.scrollTo({ top, behavior: 'smooth' });
       }
     });
@@ -301,6 +336,121 @@ document.addEventListener('DOMContentLoaded', () => {
     el.dataset.delay = (i % 4 * 0.07).toFixed(2);
     revealObs.observe(el);
   });
+
+  function observeRevealElement(el) {
+    if (!el) return;
+    el.dataset.delay = '0';
+    revealObs.observe(el);
+  }
+
+  // Featured projects are rendered from JSON so the homepage mirrors the CMS shape.
+  async function loadFeaturedProjects() {
+    const grid = document.getElementById('projectsGrid');
+    if (!grid) return;
+
+    const buildCard = (project, variant) => {
+      const card = document.createElement('article');
+      card.className = `project-card ${variant === 'featured' ? 'featured-card' : 'supporting-card'} reveal`;
+      card.innerHTML = `
+        <button class="project-media" type="button" aria-label="Open ${escapeHtml(project.name)} preview">
+          <img src="${escapeHtml(project.cover)}" alt="${escapeHtml(project.name)} project preview" loading="lazy" decoding="async">
+        </button>
+        <div class="project-card-content">
+          <span class="project-category">${escapeHtml(project.category)}</span>
+          <h3 class="project-card-title">${escapeHtml(project.name)}</h3>
+          <p class="project-card-desc">${escapeHtml(project.description)}</p>
+          <a href="projects.html#${escapeHtml(project.id)}" class="project-card-link" aria-label="View ${escapeHtml(project.name)} case study">
+            View case study
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      `;
+
+      const mediaButton = card.querySelector('.project-media');
+      const image = card.querySelector('img');
+      mediaButton?.addEventListener('click', () => openLightbox(image?.src, image?.alt));
+
+      image?.addEventListener('load', () => image.classList.add('is-loaded'), { once: true });
+      image?.addEventListener('error', () => card.classList.add('project-card-error'), { once: true });
+      if (image?.complete && image.naturalWidth > 0) image.classList.add('is-loaded');
+
+      return card;
+    };
+
+    try {
+      const response = await fetch('content/projects.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Projects request failed: ${response.status}`);
+
+      const projects = await response.json();
+      const featuredProjects = projects.filter(project => project.featured);
+      const primaryProject = featuredProjects.find(project => project.isPrimary) || featuredProjects[0];
+      const supportingProjects = featuredProjects
+        .filter(project => project.id !== primaryProject?.id)
+        .slice(0, 2);
+
+      if (!primaryProject) {
+        grid.innerHTML = '<p class="projects-empty">Selected projects are being updated.</p>';
+        return;
+      }
+
+      grid.innerHTML = '';
+      grid.appendChild(buildCard(primaryProject, 'featured'));
+
+      const supportingWrap = document.createElement('div');
+      supportingWrap.className = 'supporting-projects';
+      supportingProjects.forEach(project => supportingWrap.appendChild(buildCard(project, 'supporting')));
+      grid.appendChild(supportingWrap);
+
+      grid.querySelectorAll('.reveal').forEach(observeRevealElement);
+    } catch (error) {
+      console.error('Featured projects could not be loaded:', error);
+      grid.innerHTML = '<p class="projects-empty">Selected projects could not be loaded right now.</p>';
+    }
+  }
+
+  loadFeaturedProjects();
+
+  async function loadAllProjects() {
+    const grid = document.getElementById('allProjectsGrid');
+    if (!grid) return;
+
+    try {
+      const response = await fetch('content/projects.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Projects request failed: ${response.status}`);
+
+      const projects = await response.json();
+      grid.innerHTML = projects.map(project => `
+        <article class="project-card featured-card reveal" id="${escapeHtml(project.id)}">
+          <div class="project-media">
+            <img src="${escapeHtml(project.cover)}" alt="${escapeHtml(project.name)} project preview" loading="lazy" decoding="async">
+          </div>
+          <div class="project-card-content">
+            <span class="project-category">${escapeHtml(project.category)}</span>
+            <h2 class="project-card-title">${escapeHtml(project.name)}</h2>
+            <p class="project-card-desc">${escapeHtml(project.description)}</p>
+          </div>
+        </article>
+      `).join('');
+
+      grid.querySelectorAll('.reveal').forEach(observeRevealElement);
+      grid.querySelectorAll('.project-media img').forEach(img => {
+        const markLoaded = () => img.classList.add('is-loaded');
+        if (img.complete && img.naturalWidth > 0) {
+          markLoaded();
+        } else {
+          img.addEventListener('load', markLoaded, { once: true });
+          img.addEventListener('error', markLoaded, { once: true });
+        }
+      });
+    } catch (error) {
+      console.error('Projects could not be loaded:', error);
+      grid.innerHTML = '<p class="projects-empty">Projects could not be loaded right now.</p>';
+    }
+  }
+
+  loadAllProjects();
 
   // ════════════════════════════════════
   // 10. COUNTER ANIMATION

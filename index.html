@@ -22,7 +22,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://undesignedbysahadat.github.io/undesigned/" />
   <meta property="og:image"
-    content="https://undesignedbysahadat.github.io/undesigned/otheri%20imgs/UnDesigned%20Primary%20logo.jpg" />
+    content="https://undesignedbysahadat.github.io/undesigned/assets/brand/UnDesigned%20Primary%20logo.jpg" />
   <meta property="og:site_name" content="UnDesigned" />
   <meta property="og:locale" content="en_IN" />
 
@@ -32,19 +32,19 @@
   <meta name="twitter:description"
     content="Brand & Visual Designer creating clean, strategic brand identities, custom logo systems, and visual design for businesses." />
   <meta name="twitter:image"
-    content="https://undesignedbysahadat.github.io/undesigned/otheri%20imgs/UnDesigned%20Primary%20logo.jpg" />
+    content="https://undesignedbysahadat.github.io/undesigned/assets/brand/UnDesigned%20Primary%20logo.jpg" />
   <meta name="twitter:url" content="https://undesignedbysahadat.github.io/undesigned/" />
 
   <!-- Favicons & App Icons -->
-  <link rel="shortcut icon" href="favicons/favicon.ico" type="image/x-icon" />
-  <link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="48x48" href="favicons/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
-  <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
-  <link rel="manifest" href="favicons/site.webmanifest" />
+  <link rel="shortcut icon" href="assets/favicons/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicons/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicons/favicon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicons/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicons/site.webmanifest" />
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -60,7 +60,7 @@
           "@id": "https://undesignedbysahadat.github.io/undesigned/#organization"
         },
         "url": "https://undesignedbysahadat.github.io/undesigned/",
-        "image": "https://undesignedbysahadat.github.io/undesigned/otheri%20imgs/sahadat.webp",
+        "image": "https://undesignedbysahadat.github.io/undesigned/assets/brand/sahadat.webp",
         "sameAs": [
           "https://www.instagram.com/undesignedbysahadat/",
           "https://wa.me/918305269282"
@@ -78,8 +78,8 @@
         "@id": "https://undesignedbysahadat.github.io/undesigned/#organization",
         "name": "UnDesigned",
         "url": "https://undesignedbysahadat.github.io/undesigned/",
-        "logo": "https://undesignedbysahadat.github.io/undesigned/otheri%20imgs/UnDesigned%20Primary%20logo.jpg",
-        "image": "https://undesignedbysahadat.github.io/undesigned/otheri%20imgs/UnDesigned%20Primary%20logo.jpg",
+        "logo": "https://undesignedbysahadat.github.io/undesigned/assets/brand/UnDesigned%20Primary%20logo.jpg",
+        "image": "https://undesignedbysahadat.github.io/undesigned/assets/brand/UnDesigned%20Primary%20logo.jpg",
         "description": "UnDesigned is the branding and visual design studio of Sahadat Khan, specializing in clean, strategic brand identities, custom logo systems, and high-impact visual design for growing brands.",
         "founder": {
           "@id": "https://undesignedbysahadat.github.io/undesigned/#person"
@@ -126,8 +126,8 @@
   <!-- PAGE LOADER -->
   <div class="page-loader" id="pageLoader">
     <div class="loader-logo">
-      <img src="my logo svg/UnDesigned Logo_icon lite tp.svg" alt="UnDesigned" class="logo-lite" />
-      <img src="my logo svg/UnDesigned Logo_icon dark tp.svg" alt="UnDesigned" class="logo-dark" />
+      <img src="assets/brand/UnDesigned Logo_icon lite tp.svg" alt="UnDesigned" class="logo-lite" />
+      <img src="assets/brand/UnDesigned Logo_icon dark tp.svg" alt="UnDesigned" class="logo-dark" />
       <div class="loader-bar">
         <div class="loader-fill" id="loaderFill"></div>
       </div>
@@ -176,30 +176,32 @@
   </div>
 
   <!-- MOBILE MENU -->
+  <div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
   <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">×</button>
     <ul>
-      <li><a href="#about" class="mobile-link">About</a></li>
-      <li><a href="#work" class="mobile-link">Work</a></li>
-      <li><a href="#services" class="mobile-link">Services</a></li>
-      <li><a href="#contact" class="mobile-link mobile-link-cta">Let's Talk</a></li>
+      <li><a href="projects.html" class="mobile-link" data-nav-page="projects">Projects</a></li>
+      <li><a href="index.html#services" class="mobile-link">Services</a></li>
+      <li><a href="index.html#faq" class="mobile-link">FAQ</a></li>
+      <li><a href="index.html#contact" class="mobile-link mobile-link-cta">Let's Talk</a></li>
     </ul>
   </div>
 
   <!-- NAVBAR -->
   <nav class="navbar fullwidth" id="navbar">
     <div class="nav-inner" id="navInner">
-      <a href="#home" class="nav-logo">
-        <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="nav-logo-wordmark logo-lite" />
-        <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="nav-logo-wordmark logo-dark" />
+      <a href="index.html" class="nav-logo">
+        <img src="assets/brand/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="nav-logo-wordmark logo-lite" />
+        <img src="assets/brand/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="nav-logo-wordmark logo-dark" />
         <span class="nav-logo-sep">|</span>
         <span class="nav-logo-name">Sahadat Khan</span>
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#services">Services</a></li>
+        <li><a href="projects.html" data-nav-page="projects">Projects</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
       </ul>
-      <a href="#contact" class="nav-cta">Let's Talk</a>
+      <a href="index.html#contact" class="nav-cta">Let's Talk</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -217,8 +219,8 @@
         Available for Freelance Projects
       </div>
       <div class="hero-big-title">
-        <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="hero-wordmark logo-lite" />
-        <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="hero-wordmark logo-dark" />
+        <img src="assets/brand/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="hero-wordmark logo-lite" />
+        <img src="assets/brand/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="hero-wordmark logo-dark" />
       </div>
       <h1 class="hero-title">
         I build brands that <span class="accent-word">speak</span><br>before you do.
@@ -245,7 +247,7 @@
     <div class="about-grid">
       <div class="about-image-wrap reveal">
         <div class="about-image-box">
-          <img src="otheri imgs/sahadat.webp" alt="Sahadat Khan" loading="lazy" decoding="async" />
+          <img src="assets/brand/sahadat.webp" alt="Sahadat Khan" loading="lazy" decoding="async" />
         </div>
         <div class="about-image-badge">
           <div class="badge-icon">✦</div>
@@ -298,207 +300,28 @@
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- SELECTED PROJECTS -->
   <section id="work">
     <div class="work-header reveal">
       <div>
         <div class="section-label">Selected Work</div>
-        <h2 class="section-title">Brand ecosystems<br>I've built.</h2>
+        <h2 class="section-title">Selected Projects</h2>
       </div>
-      <p class="section-subtitle" style="margin:0;max-width:300px;">Each project is a complete visual system — not just
-        a logo.</p>
+      <p class="section-subtitle">A curated selection of branding and marketing work, crafted to solve real business problems through clear visual systems.</p>
     </div>
-
-    <!-- 01 LOGO FOLIO -->
-    <div class="project-section reveal" id="proj-logos">
-      <div class="proj-header">
-        <div class="proj-index">01</div>
-        <div>
-          <div class="card-tags"><span class="card-tag">Logo Design</span><span class="card-tag">Multi-project</span>
-          </div>
-          <h3 class="proj-title">Logo Folio</h3>
-          <p class="proj-desc">A curated collection of logos across different industries — showing range, strategic
-            thinking, and visual style.</p>
-        </div>
-      </div>
-      <div class="proj-assets-grid logos-grid">
-        <div class="asset-cell lightbox-trigger"><img src="my logo svg/UnDesigned Logo_icon lite tp.svg"
-            alt="UnDesigned Logo" /></div>
-        <div class="asset-cell lightbox-trigger"><img src="brewbite images/BrewBite Logo Primary.webp"
-            alt="BrewBite Primary" loading="lazy" decoding="async" />
-        </div>
-        <div class="asset-cell lightbox-trigger dark-cell"><img src="brewbite images/BrewBite Logo White.webp"
-            alt="BrewBite White" loading="lazy" decoding="async" /></div>
-        <div class="asset-cell lightbox-trigger light-cell"><img src="brewbite images/BrewBite Logo Black.webp"
-            alt="BrewBite Black" loading="lazy" decoding="async" /></div>
-        <div class="asset-cell lightbox-trigger"><img src="brewbite images/BrewBite Icon.webp" alt="BrewBite Icon"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="asset-cell lightbox-trigger"><img src="logofolio/Dream girl's wear shop logo.webp"
-            alt="Dream Girl Logo" loading="lazy" decoding="async" /></div>
-      </div>
+    
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Rendered dynamically by script.js -->
     </div>
-
-    <!-- 02 BREWBITE -->
-    <div class="project-section reveal" id="proj-brewbite">
-      <div class="proj-header">
-        <div class="proj-index">02</div>
-        <div>
-          <div class="card-tags"><span class="card-tag">Brand Identity</span><span class="card-tag">Full System</span>
-          </div>
-          <h3 class="proj-title">BrewBite Café</h3>
-          <p class="proj-desc">Complete brand identity for a modern café — logo system, color palette, typography,
-            social posts, menu design, and mockups.</p>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Logo System</div>
-        <div class="proj-assets-grid brewbite-logos">
-          <div class="asset-cell lightbox-trigger"><img src="brewbite images/BrewBite Logo Primary.webp"
-              alt="Primary Logo" loading="lazy" decoding="async" />
-          </div>
-          <div class="asset-cell lightbox-trigger dark-cell"><img src="brewbite images/BrewBite Logo White.webp"
-              alt="White Logo" loading="lazy" decoding="async" /></div>
-          <div class="asset-cell lightbox-trigger light-cell"><img src="brewbite images/BrewBite Logo Black.webp"
-              alt="Black Logo" loading="lazy" decoding="async" /></div>
-          <div class="asset-cell lightbox-trigger"><img src="brewbite images/BrewBite Icon.webp" alt="Icon Logo"
-              loading="lazy" decoding="async" /></div>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Brand Assets</div>
-        <div class="proj-assets-grid">
-          <div class="asset-cell lightbox-trigger wide-cell"><img src="brewbite images/BrewBite Brand Assets.webp"
-              alt="Brand Assets" loading="lazy" decoding="async" /></div>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Social & Print</div>
-        <div class="proj-assets-grid brew-print">
-          <div class="asset-cell lightbox-trigger brew-print-cell"><img
-              src="brewbite images/BrewBite SM ProductFocus.webp" alt="Social Post" loading="lazy" decoding="async" />
-          </div>
-          <div class="asset-cell lightbox-trigger brew-print-cell"><img
-              src="brewbite images/BrewBite Poster Mockup.webp" alt="Poster Mockup" loading="lazy" decoding="async" />
-          </div>
-          <div class="asset-cell lightbox-trigger brew-print-cell"><img src="brewbite images/BrewBite Menu Mockup.webp"
-              alt="Menu Mockup" loading="lazy" decoding="async" /></div>
-        </div>
-      </div>
+    
+    <div class="projects-cta-wrap reveal">
+      <a href="projects.html" class="btn-primary">
+        View All Projects
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
     </div>
-
-    <!-- 03 GLOWERA -->
-    <div class="project-section reveal" id="proj-glowera">
-      <div class="proj-header">
-        <div class="proj-index">03</div>
-        <div>
-          <div class="card-tags"><span class="card-tag">Skincare Brand</span><span class="card-tag">Self-initiated
-              Concept</span></div>
-          <h3 class="proj-title">Glowera</h3>
-          <p class="proj-desc">Self-initiated skincare brand concept — identity system, packaging design for serum,
-            cream & product box, and social creatives.</p>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Brand Identity</div>
-        <div class="proj-assets-grid glowera-identity">
-          <div class="placeholder-cell square-cell">+ Logo</div>
-          <div class="placeholder-cell square-cell">+ Color Palette</div>
-          <div class="placeholder-cell square-cell">+ Typography</div>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Packaging</div>
-        <div class="proj-assets-grid glowera-pack">
-          <div class="placeholder-cell tall-cell">+ Serum Bottle</div>
-          <div class="placeholder-cell tall-cell">+ Cream Jar</div>
-          <div class="placeholder-cell tall-cell">+ Product Box</div>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Social Creatives</div>
-        <div class="proj-assets-grid glowera-social">
-          <div class="placeholder-cell square-cell">+ Social Creative 1</div>
-          <div class="placeholder-cell square-cell">+ Social Creative 2</div>
-          <div class="placeholder-cell square-cell">+ Social Creative 3</div>
-          <div class="placeholder-cell square-cell">+ Social Creative 4</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 04 SHEETOMATIC -->
-    <div class="project-section reveal" id="proj-sheetomatic">
-      <div class="proj-header">
-        <div class="proj-index">04</div>
-        <div>
-          <div class="card-tags"><span class="card-tag">Social Media</span><span class="card-tag">YT
-              Thumbnails</span><span class="card-tag">In-house</span></div>
-          <h3 class="proj-title">Sheetomatic</h3>
-          <p class="proj-desc">In-house design — social media creatives and YouTube thumbnails that
-            drive engagement and brand consistency.</p>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Social Media Creatives</div>
-        <div class="proj-assets-grid sheet-social">
-          <div class="asset-cell lightbox-trigger ratio-1-1"><img src="sheetomatic/Diwali Post.webp" alt="Diwali Post"
-              loading="lazy" decoding="async" />
-          </div>
-          <div class="asset-cell lightbox-trigger ratio-1-1"><img src="sheetomatic/Christmas Post.webp"
-              alt="Christmas Post" loading="lazy" decoding="async" /></div>
-          <div class="asset-cell lightbox-trigger ratio-1-1"><img src="sheetomatic/New Year Post.webp"
-              alt="New Year Post" loading="lazy" decoding="async" />
-          </div>
-          <div class="asset-cell lightbox-trigger ratio-1-1"><img src="sheetomatic/Holi post.webp" alt="Holi Post"
-              loading="lazy" decoding="async" />
-          </div>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Carousel Designs</div>
-        <div class="carousel-full-wrap">
-          <img src="sheetomatic/Carousel Attendance.webp" alt="Carousel 1" class="carousel-full-img" loading="lazy"
-            decoding="async" />
-        </div>
-        <div class="carousel-full-wrap" style="margin-top:10px;">
-          <img src="sheetomatic/automation carousel horizontal.webp" alt="Carousel 2" class="carousel-full-img"
-            loading="lazy" decoding="async" />
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">YouTube Thumbnails</div>
-        <div class="proj-assets-grid yt-grid">
-          <div class="asset-cell lightbox-trigger ratio-16-9"><img src="sheetomatic/automate data entry thumbnail.webp"
-              alt="YT Thumbnail 1" loading="lazy" decoding="async" /></div>
-          <div class="asset-cell lightbox-trigger ratio-16-9"><img src="sheetomatic/own task manager thumbnail.webp"
-              alt="YT Thumbnail 2" loading="lazy" decoding="async" /></div>
-          <div class="asset-cell lightbox-trigger ratio-16-9"><img src="sheetomatic/Text & Weeknum thumbnail.webp"
-              alt="YT Thumbnail 3" loading="lazy" decoding="async" /></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 05 ELETECH -->
-    <div class="project-section reveal" id="proj-eletech">
-      <div class="proj-header">
-        <div class="proj-index">05</div>
-        <div>
-          <div class="card-tags"><span class="card-tag">Full Brand Profile</span><span class="card-tag">Client
-              Work</span></div>
-          <h3 class="proj-title">Eletech Solutions</h3>
-          <p class="proj-desc">End-to-end brand profile for a tech company — designed to present the brand, services,
-            and capabilities in a clear visual format.</p>
-        </div>
-      </div>
-      <div class="proj-subsection">
-        <div class="proj-sub-label">Company Profile — Full View</div>
-        <div class="eletech-profile-wrap">
-          <img src="otheri imgs/profile horizontal.webp" alt="Eletech Company Profile" class="eletech-profile-img"
-            loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
-
   </section>
 
   <!-- SERVICES -->
@@ -544,6 +367,55 @@
             <li>Canva & Illustrator Template Sets</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY WORK WITH ME -->
+  <section id="why-work-with-me" class="why-section">
+    <div class="work-header reveal">
+      <div>
+        <div class="section-label">Approach</div>
+        <h2 class="section-title">Why Work With Me</h2>
+      </div>
+      <p class="section-subtitle">How I approach brand strategy and visual design to build trust and solve real business problems.</p>
+    </div>
+    
+    <div class="why-grid">
+      <!-- Strategic Thinking -->
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">✦</div>
+          <h3 class="trust-title">Strategic Thinking</h3>
+        </div>
+        <p class="trust-desc">Every design decision is made with business goals and brand clarity in mind, ensuring your visuals drive real commercial value.</p>
+      </div>
+      
+      <!-- Consistent Visual Systems -->
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">◈</div>
+          <h3 class="trust-title">Consistent Visual Systems</h3>
+        </div>
+        <p class="trust-desc">I create cohesive brand identities and templates that remain highly recognizable and uniform across every customer touchpoint.</p>
+      </div>
+      
+      <!-- Real-World Applications -->
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">◆</div>
+          <h3 class="trust-title">Real-World Applications</h3>
+        </div>
+        <p class="trust-desc">My work focuses on practical, high-performance branding assets that translate seamlessly across packaging, digital, and print.</p>
+      </div>
+      
+      <!-- Collaborative Process -->
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">◇</div>
+          <h3 class="trust-title">Collaborative Process</h3>
+        </div>
+        <p class="trust-desc">I maintain clear communication, thoughtful design iterations, and highly reliable project delivery from concept to final files.</p>
       </div>
     </div>
   </section>
@@ -667,7 +539,7 @@
         <!-- WhatsApp -->
         <a href="https://wa.me/918305269282?text=Hi%20Sahadat!%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20working%20with%20you.%20Could%20we%20discuss%20my%20project%3F"
           target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Chat on WhatsApp">
-          <img src="otheri imgs/whatsapp icon.svg" alt="WhatsApp" class="social-btn-icon whatsapp-icon" width="18"
+          <img src="assets/icons/whatsapp icon.svg" alt="WhatsApp" class="social-btn-icon whatsapp-icon" width="18"
             height="18" />
           WhatsApp
         </a>
@@ -741,8 +613,8 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      <img src="my logo svg/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="footer-wordmark logo-lite" />
-      <img src="my logo svg/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="footer-wordmark logo-dark" />
+      <img src="assets/brand/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned" class="footer-wordmark logo-lite" />
+      <img src="assets/brand/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned" class="footer-wordmark logo-dark" />
     </div>
     <div class="footer-copy">© 2026 UnDesigned — Sahadat Khan</div>
     <div class="footer-links">
