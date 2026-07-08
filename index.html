@@ -177,19 +177,21 @@
   </div>
 
   <!-- MOBILE MENU -->
+  <div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
   <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">×</button>
     <ul>
-      <li><a href="#about" class="mobile-link">About</a></li>
-      <li><a href="#work" class="mobile-link">Work</a></li>
-      <li><a href="#services" class="mobile-link">Services</a></li>
-      <li><a href="#contact" class="mobile-link mobile-link-cta">Let's Talk</a></li>
+      <li><a href="projects.html" class="mobile-link" data-nav-page="projects">Projects</a></li>
+      <li><a href="index.html#services" class="mobile-link">Services</a></li>
+      <li><a href="index.html#faq" class="mobile-link">FAQ</a></li>
+      <li><a href="index.html#contact" class="mobile-link mobile-link-cta">Let's Talk</a></li>
     </ul>
   </div>
 
   <!-- NAVBAR -->
   <nav class="navbar fullwidth" id="navbar">
     <div class="nav-inner" id="navInner">
-      <a href="#home" class="nav-logo">
+      <a href="index.html" class="nav-logo">
         <img src="assets/brand/UnDesigned Logo_wordmark lite.svg" alt="UnDesigned"
           class="nav-logo-wordmark logo-lite" />
         <img src="assets/brand/UnDesigned Logo_wordmark dark.svg" alt="UnDesigned"
@@ -198,11 +200,11 @@
         <span class="nav-logo-name">Sahadat Khan</span>
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#services">Services</a></li>
+        <li><a href="projects.html" data-nav-page="projects">Projects</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
       </ul>
-      <a href="#contact" class="nav-cta">Let's Talk</a>
+      <a href="index.html#contact" class="nav-cta">Let's Talk</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -301,8 +303,34 @@
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- SELECTED PROJECTS -->
   <section id="work">
+    <div class="work-header reveal">
+      <div>
+        <div class="section-label">Selected Work</div>
+        <h2 class="section-title">Selected Projects</h2>
+      </div>
+      <p class="section-subtitle">A curated selection of branding and marketing work, crafted to solve real business
+        problems through clear visual systems.</p>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Rendered dynamically by script.js -->
+    </div>
+
+    <div class="projects-cta-wrap reveal">
+      <a href="projects.html" class="btn-primary">
+        View All Projects
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- LEGACY WORK (hidden; retained only as previous static reference) -->
+  <section id="legacy-work" hidden style="display:none">
     <div class="work-header reveal">
       <div>
         <div class="section-label">Selected Work</div>
@@ -557,6 +585,56 @@
             <li>Canva & Illustrator Template Sets</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY WORK WITH ME -->
+  <section id="why-work-with-me" class="why-section">
+    <div class="work-header reveal">
+      <div>
+        <div class="section-label">Approach</div>
+        <h2 class="section-title">Why Work With Me</h2>
+      </div>
+      <p class="section-subtitle">How I approach brand strategy and visual design to build trust and solve real business
+        problems.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">✦</div>
+          <h3 class="trust-title">Strategic Thinking</h3>
+        </div>
+        <p class="trust-desc">Every design decision is made with business goals and brand clarity in mind, ensuring your
+          visuals drive real commercial value.</p>
+      </div>
+
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">●</div>
+          <h3 class="trust-title">Consistent Visual Systems</h3>
+        </div>
+        <p class="trust-desc">I create cohesive brand identities and templates that remain highly recognizable and
+          uniform across every customer touchpoint.</p>
+      </div>
+
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">◆</div>
+          <h3 class="trust-title">Real-World Applications</h3>
+        </div>
+        <p class="trust-desc">My work focuses on practical, high-performance branding assets that translate seamlessly
+          across packaging, digital, and print.</p>
+      </div>
+
+      <div class="trust-card reveal">
+        <div class="trust-header">
+          <div class="trust-icon">◇</div>
+          <h3 class="trust-title">Collaborative Process</h3>
+        </div>
+        <p class="trust-desc">I maintain clear communication, thoughtful design iterations, and highly reliable project
+          delivery from concept to final files.</p>
       </div>
     </div>
   </section>
